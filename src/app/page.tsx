@@ -3,10 +3,14 @@ import CallAgent from "@/components/CallAgent";
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Outbound Demo</h1>
-        <p className="text-gray-600">
-          Enter a phone number to trigger an outbound call.
+      <div className="mb-10 text-left min-w-2xl">
+        <img
+          src="https://yabbr.com.au/assets/yabbr-logo-blue.91a6ee06af1b.png"
+          alt="Yabbr"
+        />
+
+        <p className="text-gray-600 mt-2">
+          Enter a phone number to trigger an outbound demo call.
         </p>
       </div>
       <div className="w-full max-w-2xl grid grid-cols-2 gap-4">
