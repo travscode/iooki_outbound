@@ -46,15 +46,13 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error("ElevenLabs API Error:", errorData);
       return NextResponse.json(
-        { error: errorData.message || "Failed to place call with ElevenLabs" },
+        { error: errorData.message || "Failed to place call" },
         { status: response.status },
       );
     }
 
     const data = await response.json();
-    console.log("ElevenLabs API Response:", data);
     return NextResponse.json({ success: true, data });
   } catch (error) {
     console.error("Error placing call:", error);
