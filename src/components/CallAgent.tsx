@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function CallAgent() {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [demoType, setDemoType] = useState("bill-chaser");
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
@@ -21,7 +22,7 @@ export default function CallAgent() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ phoneNumber, demoType }),
       });
 
       const data = await response.json();
@@ -57,11 +58,29 @@ export default function CallAgent() {
             id="phone"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            placeholder="+61234567890"
+            placeholder="0400 000 000"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors text-black"
             required
           />
-          <p className="text-xs text-gray-500 mt-1">Format: +61234567890</p>
+          <p className="text-xs text-gray-500 mt-1">Format: 0400 000 000</p>
+        </div>
+
+        <div>
+          <label
+            htmlFor="demoType"
+            className="block text-sm font-bold text-gray-700 mb-1"
+          >
+            Choose Demo
+          </label>
+          <select
+            id="demoType"
+            value={demoType}
+            onChange={(e) => setDemoType(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors text-black bg-white"
+          >
+            <option value="bill-chaser">Bill Chaser</option>
+            <option value="market-research">Market Research</option>
+          </select>
         </div>
 
         <button

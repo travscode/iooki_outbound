@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
  */
 export async function POST(request: Request) {
   try {
-    const { phoneNumber } = await request.json();
+    const { phoneNumber, demoType } = await request.json();
 
     if (!phoneNumber) {
       return NextResponse.json(
@@ -15,9 +15,30 @@ export async function POST(request: Request) {
       );
     }
 
+    // Format phone number
+    // Remove spaces, dashes, parentheses
+    let formattedPhoneNumber = phoneNumber.replace(/[\s\-\(\)]/g, "");
+
+    // If it starts with '0', replace with '+61' (Australia country code)
+    if (formattedPhoneNumber.startsWith("0")) {
+      formattedPhoneNumber = formattedPhoneNumber.replace(/^0/, "+61");
+    }
+    // If it starts with '61' but no '+', add the '+'
+    else if (formattedPhoneNumber.startsWith("61")) {
+      formattedPhoneNumber = "+" + formattedPhoneNumber;
+    }
+
     const apiKey = process.env.ELEVENLABS_API_KEY;
-    const agentId = process.env.AGENT_ID;
     const twilioPhoneNumberId = process.env.TWILIO_PHONE_NUMBER_ID;
+
+    // Select agent ID based on demo type
+    let agentId = process.env.AGENT_ID; // Default fallback
+
+    if (demoType === "bill-chaser") {
+      agentId = process.env.AGENT_ID_BILL_CHASER || agentId;
+    } else if (demoType === "market-research") {
+      agentId = process.env.AGENT_ID_MARKET_RESEARCH || agentId;
+    }
 
     if (!apiKey || !agentId || !twilioPhoneNumberId) {
       console.error("Missing environment variables");
@@ -39,7 +60,7 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           agent_id: agentId,
           agent_phone_number_id: twilioPhoneNumberId,
-          to_number: phoneNumber,
+          to_number: formattedPhoneNumber,
         }),
       },
     );
