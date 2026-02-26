@@ -17,7 +17,7 @@ export default function Home() {
         <CallAgent />
         <div className="bg-gray-200 rounded-3xl p-4 text-sm">
           <h2 className="text-2xl font-bold mb-4 text-center text-black">
-            Identify Info
+            Demo Scenario
           </h2>
           <p className="text-black">
             <strong>Name:</strong> Homer Simpson
@@ -31,7 +31,8 @@ export default function Home() {
           </p>
 
           <p className="text-black">
-            <strong>Debt:</strong> $250 with Koala Bank, due on 1 August 2024
+            <strong>Debt:</strong> $250 with Anytime Fitness, due on 1 August
+            2025
           </p>
           <p className="text-black">
             <strong>Minimum payment plan amount:</strong> $25
