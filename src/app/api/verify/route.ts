@@ -27,9 +27,9 @@ export async function POST(request: Request) {
     };
 
     const reference: ReferenceData = body.reference ?? {
-      name: "Bob Weerts",
+      name: "Bob Knollys",
       dob: "May 1, 1980",
-      address: "742 Evergreen Terrace, Springfield, IL 62704",
+      address: "742 Evergreen Terrace, Sydney, NSW 2000",
     };
 
     if (!process.env.OPENAI_API_KEY) {
