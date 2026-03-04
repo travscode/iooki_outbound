@@ -33,12 +33,13 @@ export default function ScenarioCallAgent({
         last_name: selectedPerson.lastName,
         dob: selectedPerson.dob,
         address: selectedPerson.address,
+        name: `${selectedPerson.firstName} ${selectedPerson.lastName}`,
+
         debt_amount: selectedPerson.debtAmount,
         creditor: selectedPerson.creditor,
         min_payment: selectedPerson.minPayment,
         debt_due_date: selectedPerson.debtDueDate,
         // Passing the full name as well if needed
-        name: `${selectedPerson.firstName} ${selectedPerson.lastName}`,
       };
 
       const response = await fetch("/api/make-call", {
