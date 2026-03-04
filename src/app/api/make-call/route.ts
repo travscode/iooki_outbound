@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
  */
 export async function POST(request: Request) {
   try {
-    const { phoneNumber, demoType } = await request.json();
+    const { phoneNumber, demoType, dynamic_variables } = await request.json();
 
     if (!phoneNumber) {
       return NextResponse.json(
@@ -38,6 +38,8 @@ export async function POST(request: Request) {
       agentId = process.env.AGENT_ID_BILL_CHASER || agentId;
     } else if (demoType === "market-research") {
       agentId = process.env.AGENT_ID_MARKET_RESEARCH || agentId;
+    } else if (demoType === "dynamic-id") {
+      agentId = process.env.AGENT_ID_DYNAMIC_ID || agentId;
     }
 
     if (!apiKey || !agentId || !twilioPhoneNumberId) {
@@ -46,6 +48,25 @@ export async function POST(request: Request) {
         { error: "Server configuration error" },
         { status: 500 },
       );
+    }
+
+    const payload: {
+      agent_id: string;
+      agent_phone_number_id: string;
+      to_number: string;
+      conversation_initiation_client_data?: {
+        dynamic_variables: Record<string, string | number | boolean>;
+      };
+    } = {
+      agent_id: agentId,
+      agent_phone_number_id: twilioPhoneNumberId,
+      to_number: formattedPhoneNumber,
+    };
+
+    if (dynamic_variables) {
+      payload.conversation_initiation_client_data = {
+        dynamic_variables,
+      };
     }
 
     // Call ElevenLabs API
@@ -57,11 +78,7 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
           "xi-api-key": apiKey,
         },
-        body: JSON.stringify({
-          agent_id: agentId,
-          agent_phone_number_id: twilioPhoneNumberId,
-          to_number: formattedPhoneNumber,
-        }),
+        body: JSON.stringify(payload),
       },
     );
 

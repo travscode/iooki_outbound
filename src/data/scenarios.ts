@@ -1,0 +1,136 @@
+export interface Person {
+  id: string;
+  firstName: string;
+  lastName: string;
+  dob: string;
+  phone: string;
+  address: string;
+  debtAmount: number;
+  creditor: string;
+  minPayment: number;
+  debtDueDate: string;
+}
+
+export const SCENARIOS: Person[] = [
+  {
+    id: "1",
+    firstName: "Daniel",
+    lastName: "Todd",
+    dob: "1/03/1980",
+    phone: "0409 121 580",
+    address: "333 Collins Street, Melbourne 3000 VIC",
+    debtAmount: 250,
+    creditor: "Anytime Fitness",
+    minPayment: 25,
+    debtDueDate: "1 August 2025",
+  },
+  {
+    id: "2",
+    firstName: "Clare",
+    lastName: "Whitworth",
+    dob: "1/03/1980",
+    phone: "0434 046 830",
+    address: "333 Collins Street, Melbourne 3000 VIC",
+    debtAmount: 500,
+    creditor: "Energy Australia",
+    minPayment: 50,
+    debtDueDate: "15 September 2025",
+  },
+  {
+    id: "3",
+    firstName: "Sravanthi",
+    lastName: "Maddipudi",
+    dob: "1/03/1980",
+    phone: "0433 466 323",
+    address: "333 Collins Street, Melbourne 3000 VIC",
+    debtAmount: 1200,
+    creditor: "Telstra",
+    minPayment: 100,
+    debtDueDate: "30 June 2025",
+  },
+  {
+    id: "4",
+    firstName: "Christopher John",
+    lastName: "Ross",
+    dob: "1/03/1980",
+    phone: "0415 678 114",
+    address: "333 Collins Street, Melbourne 3000 VIC",
+    debtAmount: 3000,
+    creditor: "Commonwealth Bank",
+    minPayment: 300,
+    debtDueDate: "10 October 2025",
+  },
+  // Adding more to reach closer to 10 as requested, using variations
+  {
+    id: "5",
+    firstName: "Sarah",
+    lastName: "Jenkins",
+    dob: "15/06/1985",
+    phone: "0412 345 678",
+    address: "42 Wallaby Way, Sydney 2000 NSW",
+    debtAmount: 450,
+    creditor: "Vodafone",
+    minPayment: 45,
+    debtDueDate: "5 July 2025",
+  },
+  {
+    id: "6",
+    firstName: "Michael",
+    lastName: "Smith",
+    dob: "22/11/1975",
+    phone: "0423 456 789",
+    address: "100 Queen Street, Brisbane 4000 QLD",
+    debtAmount: 1500,
+    creditor: "AGL Energy",
+    minPayment: 150,
+    debtDueDate: "20 August 2025",
+  },
+  {
+    id: "7",
+    firstName: "Jessica",
+    lastName: "Brown",
+    dob: "10/02/1990",
+    phone: "0434 567 890",
+    address: "1 King William Street, Adelaide 5000 SA",
+    debtAmount: 800,
+    creditor: "Optus",
+    minPayment: 80,
+    debtDueDate: "12 September 2025",
+  },
+  {
+    id: "8",
+    firstName: "David",
+    lastName: "Wilson",
+    dob: "05/09/1982",
+    phone: "0445 678 901",
+    address: "200 St Georges Terrace, Perth 6000 WA",
+    debtAmount: 2200,
+    creditor: "Westpac",
+    minPayment: 220,
+    debtDueDate: "1 November 2025",
+  },
+  {
+    id: "9",
+    firstName: "Emily",
+    lastName: "Taylor",
+    dob: "30/04/1988",
+    phone: "0456 789 012",
+    address: "50 Murray Street, Hobart 7000 TAS",
+    debtAmount: 350,
+    creditor: "Origin Energy",
+    minPayment: 35,
+    debtDueDate: "25 July 2025",
+  },
+  {
+    id: "10",
+    firstName: "James",
+    lastName: "Anderson",
+    dob: "18/12/1970",
+    phone: "0467 890 123",
+    address: "10 Smith Street, Darwin 0800 NT",
+    debtAmount: 5000,
+    creditor: "NAB",
+    minPayment: 500,
+    debtDueDate: "15 October 2025",
+  },
+];
