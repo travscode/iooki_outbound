@@ -5,7 +5,6 @@ import { useState } from "react";
 type VerifyCandidateInput = {
   first_name: string;
   last_name: string;
-  name: string;
   dob: string;
   address: string;
 };
@@ -18,7 +17,6 @@ export default function VerifyPage() {
   const [form, setForm] = useState<VerifyCandidateInput>({
     first_name: "",
     last_name: "",
-    name: "",
     dob: "",
     address: "",
   });
@@ -36,10 +34,15 @@ export default function VerifyPage() {
     setResult(null);
 
     try {
+      const payload = {
+        ...form,
+        name: `${form.first_name} ${form.last_name}`.trim(),
+      };
+
       const response = await fetch("/api/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       const data = (await response.json()) as VerifyResponse;
@@ -66,7 +69,6 @@ export default function VerifyPage() {
     setForm({
       first_name: "Bob",
       last_name: "Knollys",
-      name: "Bob Knollys",
       dob: "May 1, 1980",
       address: "742 Evergreen Terrace, Sydney, NSW 2000",
     });
@@ -108,18 +110,6 @@ export default function VerifyPage() {
                   onChange={(e) => updateField("last_name", e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors text-black"
                   placeholder="Knollys"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">
-                  Name (Full)
-                </label>
-                <input
-                  value={form.name}
-                  onChange={(e) => updateField("name", e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors text-black"
-                  placeholder="Bob Knollys"
                 />
               </div>
 

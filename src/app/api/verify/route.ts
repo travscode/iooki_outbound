@@ -18,10 +18,15 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    let name = body.name;
+    if ((!name || name.trim() === "") && body.first_name && body.last_name) {
+      name = `${body.first_name} ${body.last_name}`;
+    }
+
     const candidate: CandidateInput = {
       first_name: body.first_name,
       last_name: body.last_name,
-      name: body.name,
+      name,
       dob: body.dob,
       address: body.address,
     };
