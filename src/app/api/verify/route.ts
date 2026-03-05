@@ -45,8 +45,11 @@ export async function POST(request: Request) {
       "Consider nicknames, middle names, initials, punctuation, casing, spacing, " +
       "common abbreviations (St↔Street, Rd↔Road, Apt↔Apartment), and date formats. " +
       "Weigh all fields; a strong match on multiple fields increases confidence. " +
-      "Return ONLY a strict JSON object with keys: verified (boolean) and accuracy (float 0-1). " +
-      "Do not include explanations or extra fields.";
+      "Return ONLY a strict JSON object with keys: verified (boolean), accuracy (float 0-1), " +
+      "name_accuracy (float 0-1), dob_accuracy (float 0-1), and address_accuracy (float 0-1). " +
+      "Do not include explanations or extra fields. " +
+      "Example JSON response: " +
+      '{"verified": true, "accuracy": 0.95, "name_accuracy": 0.98, "dob_accuracy": 1.0, "address_accuracy": 0.85}';
 
     const userContent = JSON.stringify({
       reference,
@@ -63,6 +66,10 @@ export async function POST(request: Request) {
             "true if overall identity plausibly matches; false otherwise.",
           accuracy:
             "confidence score between 0 and 1 reflecting overall match strength.",
+          name_accuracy: "confidence score between 0 and 1 for name match.",
+          dob_accuracy: "confidence score between 0 and 1 for DOB match.",
+          address_accuracy:
+            "confidence score between 0 and 1 for address match.",
         },
       },
     });
@@ -95,7 +102,13 @@ export async function POST(request: Request) {
     const data = await response.json();
     const raw = data?.choices?.[0]?.message?.content ?? "{}";
 
-    let parsed: { verified?: boolean; accuracy?: number } = {};
+    let parsed: {
+      verified?: boolean;
+      accuracy?: number;
+      name_accuracy?: number;
+      dob_accuracy?: number;
+      address_accuracy?: number;
+    } = {};
     try {
       parsed = JSON.parse(raw);
     } catch {
@@ -115,7 +128,20 @@ export async function POST(request: Request) {
     if (accuracy < 0) accuracy = 0;
     if (accuracy > 1) accuracy = 1;
 
-    return NextResponse.json({ verified, accuracy });
+    const name_accuracy =
+      typeof parsed.name_accuracy === "number" ? parsed.name_accuracy : 0;
+    const dob_accuracy =
+      typeof parsed.dob_accuracy === "number" ? parsed.dob_accuracy : 0;
+    const address_accuracy =
+      typeof parsed.address_accuracy === "number" ? parsed.address_accuracy : 0;
+
+    return NextResponse.json({
+      verified,
+      accuracy,
+      name_accuracy,
+      dob_accuracy,
+      address_accuracy,
+    });
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
