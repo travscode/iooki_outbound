@@ -4,7 +4,7 @@ import CallAgent from "@/components/CallAgent";
 import { useState } from "react";
 
 export default function Home() {
-  const [demoType, setDemoType] = useState("bill-chaser");
+  const [demoType, setDemoType] = useState("");
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4 relative">
