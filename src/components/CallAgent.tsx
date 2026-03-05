@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 
-export default function CallAgent() {
+export default function CallAgent({
+  demoType,
+  onDemoTypeChange,
+}: {
+  demoType: string;
+  onDemoTypeChange: (type: string) => void;
+}) {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [demoType, setDemoType] = useState("bill-chaser");
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
@@ -75,7 +80,7 @@ export default function CallAgent() {
           <select
             id="demoType"
             value={demoType}
-            onChange={(e) => setDemoType(e.target.value)}
+            onChange={(e) => onDemoTypeChange(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors text-black bg-white"
           >
             <option value="bill-chaser">Debt Collection</option>
