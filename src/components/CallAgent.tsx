@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { cn } from "@/utils/utils";
 
 export default function CallAgent({
   demoType,
   onDemoTypeChange,
+  className,
 }: {
   demoType: string;
   onDemoTypeChange: (type: string) => void;
+  className?: string;
 }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +52,12 @@ export default function CallAgent({
   };
 
   return (
-    <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md border border-gray-200">
+    <div
+      className={cn(
+        "w-full max-w-md p-6 bg-white rounded-lg shadow-md border border-gray-200",
+        className,
+      )}
+    >
       <form onSubmit={handleCall} className="space-y-4">
         <div>
           <label
