@@ -10,7 +10,7 @@ type VerifyCandidateInput = {
 };
 
 type VerifyResponse =
-  | { verified: boolean; accuracy: number }
+  | { verified: boolean; reason: string; accuracy: number }
   | { error: string };
 
 export default function VerifyPage() {

@@ -1,10 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { isAuthenticatedRequest } from "@/utils/siteAuth";
 
 /**
  * API Route to initiate an outbound call via ElevenLabs Agent using Twilio integration.
  * Requires ELEVENLABS_API_KEY, AGENT_ID, and TWILIO_PHONE_NUMBER_ID in environment variables.
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const { phoneNumber, demoType, dynamic_variables } = await request.json();
 

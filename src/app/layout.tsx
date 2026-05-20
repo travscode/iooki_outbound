@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import AppHeader from "@/components/AppHeader";
+import PasswordGate from "@/components/PasswordGate";
 import "./globals.css";
+import { getIsSiteAuthenticated } from "@/utils/siteAuth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,18 +20,29 @@ export const metadata: Metadata = {
   description: "This is an outbound call agent demo.",
 };
 
-export default function RootLayout({
+/**
+ * Wraps the entire app and blocks access until the password gate is unlocked.
+ */
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isAuthenticated = await getIsSiteAuthenticated();
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}
       >
-        <AppHeader />
-        <div className="flex flex-1 flex-col">{children}</div>
+        {isAuthenticated ? (
+          <>
+            <AppHeader />
+            <div className="flex flex-1 flex-col">{children}</div>
+          </>
+        ) : (
+          <PasswordGate />
+        )}
       </body>
     </html>
   );
